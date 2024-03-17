@@ -6,7 +6,7 @@ const github = require('@actions/github');
 // Install OdinPlus Mod Uploader
 async function run(){
   try{
-    await exec('dotnet tool install -g Digitalroot.OdinPlusModUploader')
+    await exec('dotnet tool install -g Digitalroot.ModUploader')
     .then(() => exec('wget https://github.com/thunderstore-io/thunderstore-cli/releases/download/0.1.7/tcli-0.1.7-linux-x64.tar.gz'))
     .then(() => exec('tar -xf tcli-0.1.7-linux-x64.tar.gz'))
     .then(() => exec('mv ./tcli-0.1.7-linux-x64/tcli tcli'))
@@ -31,10 +31,10 @@ async function run(){
     const GITHUB_TOKEN = core.getInput('GITHUB_TOKEN');
 
     // Upload mod to NexusMods
-    await exec('opmu', ['nexusmods', 'check', `-k`, `${apiKey}`, `-cnxid`, `${cookieNexusId}`, `-csid`, `${cookieSidDevelop}`])
+    await exec('drmu', ['nexusmods', 'check', `-k`, `${apiKey}`, `-cnxid`, `${cookieNexusId}`, `-csid`, `${cookieSidDevelop}`])
           .catch((error) => core.setFailed(error));
 
-    await exec('opmu', ['nexusmods', 'upload', `${modId}`, `${archiveFile}`, 
+    await exec('drmu', ['nexusmods', 'upload', `${modId}`, `${archiveFile}`, 
                       `-f`, `${fileName}-${version}`,
                        `-v`, `${version}`,
                        `-g`, `${game}`,
